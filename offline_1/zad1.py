@@ -49,4 +49,4 @@ def ceasar( s ):
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy
-runtests( ceasar , all_tests = False )
+runtests(ceasar, all_tests=True)
