@@ -13,7 +13,7 @@ def partition(arr, p, r):
 
 def quick_sort(arr, p, r):
     # default quick sort
-    # memory complexity n log n
+    # time complexity n log n
     # if p >= r:
     #     return
     # q = partition(arr, p, r)
