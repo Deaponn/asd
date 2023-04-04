@@ -133,3 +133,4 @@ dmypy.json
 
 # Files that are not created by me
 *test*
+*.pdf

@@ -32,10 +32,80 @@ def quick_sort(T, start, end):
     quick_sort(T, last_bigger_idx, end)
 
 
+def insertion_sort(T, start, end):
+    n = end - start + 1
+    output = [0] * n
+    for idx in range(n):
+        number = T[start + idx]
+        for insert in range(n - 1, -1, -1):
+            if number > output[insert - 1]:
+                output[insert] = output[insert - 1]
+            else:
+                output[insert] = number
+                break
+            if insert == 0:
+                output[0] = number
+    return output
+
+
+def merge(T, S):
+    n = len(T)
+    m = len(S)
+    start_1st = 0
+    start_2nd = 0
+    output = [0] * (n + m)
+    current_idx = 0
+    while start_1st < n and start_2nd < m:
+        if T[start_1st] > S[start_2nd]:
+            output[current_idx] = T[start_1st]
+            start_1st += 1
+        else:
+            output[current_idx] = S[start_2nd]
+            start_2nd += 1
+        current_idx += 1
+    while start_1st < n:
+        output[current_idx] = T[start_1st]
+        start_1st += 1
+        current_idx += 1
+    while start_2nd < m:
+        output[current_idx] = S[start_2nd]
+        start_2nd += 1
+        current_idx += 1
+    return output
+
+
+def merge_sort(T, start, end):
+    n = end - start
+    # standard merge_sort:
+    # if n <= 0:
+    #     return [T[start]]
+
+    # below code optimizes from runtime 2.6s down to 2.3s (on my PC)
+    # if n <= 0:
+    #     return [T[start]]
+    # if n == 1:
+    #     if T[start] >= T[end]:
+    #         return [T[start], T[end]]
+    #     else:
+    #         return [T[end], T[start]]
+
+    # insertion sort for short arrays:
+    # for small n this has no effect to the runtime
+    if n < 41:
+        T = insertion_sort(T, start, end)
+        return T
+    middle = start + n // 2
+    left = merge_sort(T, start, middle)
+    right = merge_sort(T, middle + 1, end)
+    return merge(left, right)
+
+
+
 def snow( S ):
     output = 0
     day = 0
-    quick_sort(S, 0, len(S))
+    S = merge_sort(S, 0, len(S) - 1)
+    # quick_sort(S, 0, len(S))
     while S[day] > day:
         output += S[day] - day
         day += 1

@@ -25,7 +25,7 @@ def build_heap(T):
         heapify(T, idx, n)
 
 
-def heapsort(T):
+def heap_sort(T):
     n = len(T)
     build_heap(T)
     last_unsorted_idx = n - 1
@@ -37,6 +37,6 @@ def heapsort(T):
 
 array = [0, 1, 2, 3, 11, 4, 5, 6, 7, 8, 9]
 
-heapsort(array)
+heap_sort(array)
 
 print(array)
