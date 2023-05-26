@@ -15,7 +15,7 @@ def DFS(G):
         time += 1
         times[v] = time
         for w in G[v]:
-            if times[w] != -1:
+            if times[w] == -1:
                 parent[w] = v
                 DFSVisit(w)
         time += 1

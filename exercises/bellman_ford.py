@@ -3,11 +3,8 @@
 
 
 def relax(v, w, cost, distances, parents):
-    # print(v, w, cost)
-    if w == 0:
-        print("w jest 0:", v, w, cost)
     if distances[w] > distances[v] + cost:
-        parents[w] = w
+        parents[w] = v
         distances[w] = distances[v] + cost
 
 
