@@ -86,20 +86,7 @@ def DFS(G):
                 num_visited += 1
                 visited[w] = True
                 stack.append(w)
-    second_num_visited = 0
-    second_visited = [False] * n
-    for v in range(n):
-        if not visited[v]:
-            stack = [v]
-            while len(stack) > 0:
-                v = stack.pop()
-                for w, _ in G[v]:
-                    if not second_visited[w]:
-                        second_num_visited += 1
-                        second_visited[w] = True
-                        stack.append(w)
-            break
-    return (num_visited == second_num_visited and num_visited == n - 1) or second_num_visited == 0
+    return num_visited == n
 
 
 def beautree(G):
