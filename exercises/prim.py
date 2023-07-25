@@ -1,5 +1,5 @@
 # implementation of prim's algorithm
-# for a graph given as a, adjacency list
+# for a graph given as an adjacency list
 
 
 from queue import PriorityQueue
@@ -21,19 +21,39 @@ from queue import PriorityQueue
 #     return iterable[middle]
 
 
-def prim(s, G):
+def prim1(s, G):
     n = len(G)
     parent = [None] * n
     distance = [float("inf")] * n
     vertex_queue = PriorityQueue()
-    vertex_queue.put((0, s))
+    vertex_queue.put((0, s, -1))
     while not vertex_queue.empty():
-        dist, v = vertex_queue.get()
+        dist, v, p = vertex_queue.get()
         distance[v] = dist
+        parent[v] = p
         for w, cost in G[v]:
             if cost < distance[w]:
-                vertex_queue.put((cost, w))
+                vertex_queue.put((cost, w, v))
+    return parent
+
+
+def prim(s, G):
+    n = len(G)
+    distance = [float("inf") for _ in range(n)]
+    distance[s] = 0
+    parent = [None] * n
+    nonvisited = [True] * n
+    queue = PriorityQueue()
+    queue.put((0, s))
+    while not queue.empty():
+        _, v = queue.get()
+        for w, cost in G[v]:
+            if nonvisited[w] and cost < distance[w]:
+                print(v, w, cost, distance[w])
                 parent[w] = v
+                distance[w] = cost
+                queue.put((distance[w], w))
+        nonvisited[v] = False
     return parent
 
 
@@ -46,11 +66,19 @@ graph = [
     [(4, 1), (2, 3), (3, 3)],
     [(4, 1), (7, 1), (1, 3)],
     [(6, 1), (8, 1), (1, 3)],
-    [(7, 1), (0, 3)]
+    [(7, 1), (0, 3)],
 ]
 
+graph2 = [
+    [(1, 1), (5, 8), (4, 5)],  # 0
+    [(0, 1), (2, 3)],  # 1
+    [(1, 3), (3, 6), (4, 4)],  # 2
+    [(2, 6), (4, 2)],  # 3
+    [(3, 2), (5, 7), (0, 5), (2, 4)],  # 4
+    [(4, 7), (0, 8)],  # 5
+]
 
-parents = prim(0, graph)
+parents = prim(0, graph2)
 
 for vertex, parent in enumerate(parents[::-1]):
-    print(len(graph) - vertex - 1, " -> ", parent)
+    print(len(graph2) - vertex - 1, " -> ", parent)
